@@ -5,21 +5,21 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using MobilePOS.Order.Struck;
 
-namespace MobilePOS.Order
+namespace MobilePOS.Store
 {
-    public class ByStage
+    public class Process
     {
         #region Fields
         /// <summary>
-        /// Instance of List of Orders by Stage (pending, cancelled, received, completed, shipping) Class.
+        /// Instance of Process Order of Store (Received, Cancelled, Shipping) Class.
         /// </summary>
-        private static ByStage instance;
-        public static ByStage Instance
+        private static Process instance;
+        public static Process Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new ByStage();
+                    instance = new Process();
                 return instance;
             }
         }
@@ -29,21 +29,23 @@ namespace MobilePOS.Order
         /// Web service for communication to our Backend.
         /// </summary>
         HttpClient client;
-        public ByStage()
+        public Process()
         {
             client = new HttpClient();
         }
         #endregion
         #region Methods
-        public async void Listing(string wp_id, string session_key, string stage, Action<bool, string> callback)
+        public async void Order(string wp_id, string session_key, string stid, string odid, string stage, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
             dict.Add("wpid", wp_id);
             dict.Add("snky", session_key);
+            dict.Add("stid", stid);
+            dict.Add("odid", odid);
             dict.Add("stage", stage);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/order/bystatus", content);
+            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/store/order/process", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
