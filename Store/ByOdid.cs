@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.Http;
 using Newtonsoft.Json;
-using MobilePOS.Order.Struck;
+using MobilePOS.Order.Struct;
 
 namespace MobilePOS.Store
 {

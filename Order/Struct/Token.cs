@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MobilePOS.Order.Struck
+namespace MobilePOS.Order.Struct
 {
     public class Token
     {
