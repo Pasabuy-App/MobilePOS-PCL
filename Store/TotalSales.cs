@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Net.Http;
 using Newtonsoft.Json;
+using System.Net.Http;
 using MobilePOS.Order.Struct;
 
 namespace MobilePOS.Store
 {
-    public class ByOdid
+    public class TotalSales
     {
         #region Fields
         /// <summary>
-        /// Instance of List of Order by Order ID Class.
+        /// Instance of Total Sales By Store ID Class.
         /// </summary>
-        private static ByOdid instance;
-        public static ByOdid Instance
+        private static TotalSales instance;
+        public static TotalSales Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new ByOdid();
+                    instance = new TotalSales();
                 return instance;
             }
         }
@@ -29,21 +29,21 @@ namespace MobilePOS.Store
         /// Web service for communication to our Backend.
         /// </summary>
         HttpClient client;
-        public ByOdid()
+        public TotalSales()
         {
             client = new HttpClient();
         }
         #endregion
-        #region Methods
-        public async void Listing(string wp_id, string session_key, string odid, Action<bool, string> callback)
+        #region Methodss
+        public async void GetData(string wp_id, string session_key, string stid, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
             dict.Add("wpid", wp_id);
             dict.Add("snky", session_key);
-            dict.Add("odid", odid);
+            dict.Add("stid", stid);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/store/select", content);
+            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/store/total/sales", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
