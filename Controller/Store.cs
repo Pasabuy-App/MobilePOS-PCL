@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 using System.Net.Http;
-using MobilePOS.Controller.Struct;
+using MobilePOS.Model;
 
-
-namespace MobilePOS.Controller
+namespace MobilePOS
 {
     public class Store
     {
@@ -41,14 +39,14 @@ namespace MobilePOS.Controller
         public async void Process(string wp_id, string session_key, string stid, string odid, string stage, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            dict.Add("stid", stid);
-            dict.Add("odid", odid);
-            dict.Add("stage", stage);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                dict.Add("stid", stid);
+                dict.Add("odid", odid);
+                dict.Add("stage", stage);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/store/order/process", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/store/order/process", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -71,12 +69,12 @@ namespace MobilePOS.Controller
         public async void TotalSales(string wp_id, string session_key, string stid, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            dict.Add("stid", stid);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                dict.Add("stid", stid);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/store/total/sales", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/store/total/sales", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)

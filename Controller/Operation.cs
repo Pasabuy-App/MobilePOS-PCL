@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 using System.Net.Http;
-using MobilePOS.Controller.Struct;
+using MobilePOS.Model;
 
-namespace MobilePOS.Controller
+namespace MobilePOS
 {
     public class Operation
     {
         #region Fields
         /// <summary>
-        /// Instance of Operations Class with listing by date, by month and open stores method.
+        /// Instance of Operations Class with list by date, by month and open stores method.
         /// </summary>
         private static Operation instance;
         public static Operation Instance
@@ -40,13 +39,13 @@ namespace MobilePOS.Controller
         public async void ListByDate(string wp_id, string session_key, string start, string end, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            dict.Add("start", start);
-            dict.Add("end", end);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                dict.Add("start", start);
+                dict.Add("end", end);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1//operation/listing/bydate", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1//operation/listing/bydate", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -69,11 +68,11 @@ namespace MobilePOS.Controller
         public async void ListByMonth(string wp_id, string session_key, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/operation/listing/bymonth", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/operation/listing/bymonth", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -96,11 +95,11 @@ namespace MobilePOS.Controller
         public async void ListOpenStore(string wp_id, string session_key, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/operation/listing/openstore", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/operation/listing/openstore", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)

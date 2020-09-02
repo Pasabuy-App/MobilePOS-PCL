@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MobilePOS.Controller.Struct
+﻿
+namespace MobilePOS.Model
 {
     public class Token
     {

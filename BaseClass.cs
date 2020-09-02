@@ -1,18 +1,37 @@
-﻿using System;
-
+﻿
 namespace MobilePOS
 {
-    public class BaseClass
+    public class MPHost
     {
-        /// <summary>
-        /// Primary base domain url.
-        /// </summary>
-        public static string BaseDomainUrl
+        private static MPHost instance;
+        public static MPHost Instance
         {
             get
             {
-                return "http://localhost/wordpress/wp-json";
+                if (instance == null)
+                    instance = new MPHost();
+                return instance;
             }
         }
+
+        private bool isInitialized = false;
+        private string baseUrl = "http://localhost";
+        public string BaseDomain
+        {
+            get
+            {
+                return baseUrl + "/wp-json";
+            }
+        }
+
+        public void Initialized(string url)
+        {
+            if (!isInitialized)
+            {
+                baseUrl = url;
+                isInitialized = true;
+            }
+        }
+
     }
 }

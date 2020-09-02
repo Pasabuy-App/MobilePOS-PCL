@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 using System.Net.Http;
-using MobilePOS.Controller.Struct;
+using MobilePOS.Model;
 
-namespace MobilePOS.Controller
+namespace MobilePOS
 {
-    class Customer
+    public class Customer
     {
         #region Fields
         /// <summary>
@@ -40,12 +39,12 @@ namespace MobilePOS.Controller
         public async void Cancel(string wp_id, string session_key, string odid, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            dict.Add("odid", odid);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                dict.Add("odid", odid);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/customer/order/cancel", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/customer/order/cancel", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -68,16 +67,16 @@ namespace MobilePOS.Controller
         public async void Create(string wp_id, string session_key, string stid, string pdid, string opid, string qty, string msg, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            dict.Add("stid", stid);
-            dict.Add("pdid", pdid);
-            dict.Add("opid", opid);
-            dict.Add("qty", qty);
-            dict.Add("msg", msg);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                dict.Add("stid", stid);
+                dict.Add("pdid", pdid);
+                dict.Add("opid", opid);
+                dict.Add("qty", qty);
+                dict.Add("msg", msg);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/customer/order/insert", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/customer/order/insert", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -100,13 +99,13 @@ namespace MobilePOS.Controller
         public async void Delete(string wp_id, string session_key, string odid, string pid, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            dict.Add("odid", odid);
-            dict.Add("pid", pid);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                dict.Add("odid", odid);
+                dict.Add("pid", pid);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/customer/order/delete", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/customer/order/delete", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -129,14 +128,14 @@ namespace MobilePOS.Controller
         public async void Update(string wp_id, string session_key, string odid, string pid, string qty, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            dict.Add("odid", odid);
-            dict.Add("pid", pid);
-            dict.Add("qty", qty);
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                dict.Add("odid", odid);
+                dict.Add("pid", pid);
+                dict.Add("qty", qty);
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/customer/order/update", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/customer/order/update", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)

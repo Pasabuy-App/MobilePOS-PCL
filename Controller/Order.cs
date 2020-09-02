@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 using System.Net.Http;
-using MobilePOS.Controller.Struct;
+using MobilePOS.Model;
 
-namespace MobilePOS.Controller
+namespace MobilePOS
 {
     public class Order
     {
@@ -24,6 +23,7 @@ namespace MobilePOS.Controller
             }
         }
         #endregion
+
         #region Constructor
         /// <summary>
         /// Web service for communication to our Backend.
@@ -34,20 +34,21 @@ namespace MobilePOS.Controller
             client = new HttpClient();
         }
         #endregion
-        #region Methods
-        public async void Listing(string wp_id, string session_key, string stage, string stid, string odid, string date, string opid, Action<bool, string> callback)
+
+        #region List Method
+        public async void List(string wp_id, string session_key, string stage, string stid, string odid, string date, string opid, Action<bool, string> callback)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("wpid", wp_id);
-            dict.Add("snky", session_key);
-            if (stage != "") { dict.Add("stage", stage); }
-            if (stid != "") { dict.Add("stage", stid); }
-            if (odid != "") { dict.Add("stage", odid); }
-            if (date != "") { dict.Add("stage", date); }
-            if (opid != "") { dict.Add("stage", opid); }
+                dict.Add("wpid", wp_id);
+                dict.Add("snky", session_key);
+                if (stage != "") { dict.Add("stage", stage); }
+                if (stid != "") { dict.Add("stage", stid); }
+                if (odid != "") { dict.Add("stage", odid); }
+                if (date != "") { dict.Add("stage", date); }
+                if (opid != "") { dict.Add("stage", opid); }
             var content = new FormUrlEncodedContent(dict);
 
-            var response = await client.PostAsync(BaseClass.BaseDomainUrl + "/mobilepos/v1/order/listing", content);
+            var response = await client.PostAsync(MPHost.Instance.BaseDomain + "/mobilepos/v1/order/listing", content);
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
